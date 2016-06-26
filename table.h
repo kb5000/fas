@@ -7,6 +7,9 @@
 
 /*template<typename T>
 using t_iterator=typename T*;*/
+namespace fas
+{
+
 
 template<typename T>
 class table
@@ -582,6 +585,6 @@ void table<T>::push_back(const T& t)
   length++;
 }
 
-
+}
 
 #endif
