@@ -72,5 +72,9 @@ A useful lib for C++
 	    
 	    cout<<fas::tpro.clrall();
 	    
+	    
+	    
+	    
 
+  定义了一个table类，存储动态分配的内存。
 
