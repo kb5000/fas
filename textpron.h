@@ -5,32 +5,7 @@
 #include <string>
 #include "faster.h"
 //using std::string;
-/*
-高级字符串工具
-只对命令行输出有效
-使用方法：
-scolor(字符串,前景色,背景色)设置颜色
-可用颜色参考下方宏定义
-underline(字符串)设置下划线
-antic(字符串)反色
-movec(方向,数目)或(x坐标,y坐标)(左上角为1,1)移动光标//方向指'l'左'd'下'r'右'u'上
-clrall()清屏
-clrlin(数目)清除前n个字符
-cursav()保存光标位置
-curu()恢复上一次保存的位置
-已经定义了一个tpro对象
-如：
-	string v="text",u;
-	u=tpro.scolor(v,fblue,bred);
-	cout<<u<<endl;
-	u=tpro.underline(v);
-	cout<<u<<endl;
-	cout<<tpro.movec('l',3);
-	cout<<tpro.movec(1,1);
-	u=tpro.antic(v);
-	cout<<u<<endl;
-	cout<<tpro.clrall();
-*/
+
 #define fblack textpro::fcolors::black
 #define fred textpro::fcolors::red
 #define fgreen textpro::fcolors::green
@@ -49,6 +24,8 @@ curu()恢复上一次保存的位置
 #define bdgreen textpro::bcolors::dgreen
 #define bwhite textpro::bcolors::white
 
+namespace fas
+{
 
 class textpro
 {
@@ -183,4 +160,6 @@ private:
     return t;
   }
 }tpro;
+
+}
 #endif
