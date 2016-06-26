@@ -27,7 +27,7 @@ private:
   
 };
 
-void nor()
+void maintest()
 {
 	
 	
@@ -41,7 +41,7 @@ int main()
 	do
 	{
     testt();
-    nor();
+    maintest();
 	}while (cin.get()!='e');
 	cin.get();
 	return 0;
@@ -60,7 +60,4 @@ beginT;
 endT;
 
 }
-#undef initT
-#undef beginT
-#undef endT
-#undef outT
+//eg:cout<<outT(micro)<<endl;
