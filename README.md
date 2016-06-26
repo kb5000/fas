@@ -38,8 +38,10 @@ A useful lib for C++
    
        高级字符串工具
        只对命令行输出有效
-   使用方法：
-    scolor(字符串,前景色,背景色)设置颜色
+       
+       
+     使用方法：
+      scolor(字符串,前景色,背景色)设置颜色
     可用颜色参考下方宏定义
     underline(字符串)设置下划线
     antic(字符串)反色
@@ -49,16 +51,26 @@ A useful lib for C++
     cursav()保存光标位置
     curu()恢复上一次保存的位置
    已经定义了一个tpro对象
-   如：
+     如：
 	    string v="text",u;
+	    
 	    u=fas::tpro.scolor(v,fblue,bred);
+	    
 	    cout<<u<<endl;
+	    
 	    u=fas::tpro.underline(v);
+	    
 	    cout<<u<<endl;
+	    
 	    cout<<fas::tpro.movec('l',3);
+	    
 	    cout<<fas::tpro.movec(1,1);
+	    
 	    u=fas::tpro.antic(v);
+	    
 	    cout<<u<<endl;
+	    
 	    cout<<fas::tpro.clrall();
+	    
 
 
