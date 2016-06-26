@@ -36,4 +36,29 @@ A useful lib for C++
    
    定义了一个日志类log_t和它的一个对象log。其构造函数为：log_t(uint序号,(开始记录时的字符串,结束时的字符串)),log_t(目录及文件名开头,(序号,开始记录时的字符串,结束时的字符串))。有一个changeNum(序号)用于改变序号，同时改变文件。clearLog()用于清空并重新记录当前的日志文件。使用operator()(内容,...)或operator<<进行写入，存于"自定义文件名_序号.log"中。每次写入（执行一次operator()）都会生成一行，自定义的开始和结束字符串也会在构造和析构时调用并生成新行。也可以使用fas::endl直接开始新行。默认的对象log会将文件存在当前目录的log_0.log中，开始和结束的字符串为空并不产生新行。
    
+       高级字符串工具
+       只对命令行输出有效
+   使用方法：
+    scolor(字符串,前景色,背景色)设置颜色
+    可用颜色参考下方宏定义
+    underline(字符串)设置下划线
+    antic(字符串)反色
+    movec(方向,数目)或(x坐标,y坐标)(左上角为1,1)移动光标//方向指'l'左'd'下'r'右'u'上
+    clrall()清屏
+    clrlin(数目)清除前n个字符
+    cursav()保存光标位置
+    curu()恢复上一次保存的位置
+   已经定义了一个tpro对象
+   如：
+	    string v="text",u;
+	    u=fas::tpro.scolor(v,fblue,bred);
+	    cout<<u<<endl;
+	    u=fas::tpro.underline(v);
+	    cout<<u<<endl;
+	    cout<<fas::tpro.movec('l',3);
+	    cout<<fas::tpro.movec(1,1);
+	    u=fas::tpro.antic(v);
+	    cout<<u<<endl;
+	    cout<<fas::tpro.clrall();
+
 
