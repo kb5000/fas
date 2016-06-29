@@ -4,7 +4,7 @@ A useful lib for C++
        fas实用命名空间
        
    使用说明：
-   
+   （faster.h）
    faster(void)：内联函数，关闭了c的stdio语句与iostream之间的流同步。在处理大规模字符串时有用
    
    tstring(auto n)：将数字等各种类型转化为string型。不能用于字符数组。要将字符数组转换为string,请使用string的构造函数char *c;std::string s(c);。要在自定义的类型中使用它，请定义operator<<(ostringstream,你的类型)函数
@@ -36,7 +36,7 @@ A useful lib for C++
    
    定义了一个日志类log_t和它的一个对象log。其构造函数为：log_t(uint序号,(开始记录时的字符串,结束时的字符串)),log_t(目录及文件名开头,(序号,开始记录时的字符串,结束时的字符串))。有一个changeNum(序号)用于改变序号，同时改变文件。clearLog()用于清空并重新记录当前的日志文件。使用operator()(内容,...)或operator<<进行写入，存于"自定义文件名_序号.log"中。每次写入（执行一次operator()）都会生成一行，自定义的开始和结束字符串也会在构造和析构时调用并生成新行。也可以使用fas::endl直接开始新行。默认的对象log会将文件存在当前目录的log_0.log中，开始和结束的字符串为空并不产生新行。
    
-       高级字符串工具
+       高级字符串工具(textpron.h)
        只对命令行输出有效
        
        
@@ -76,5 +76,31 @@ A useful lib for C++
 	    
 	    
 
-  定义了一个table类，存储动态分配的内存。
+  定义了一个table类(table.h)，存储动态分配的内存。在C++11以下中，由于不支持 std::move, vector在中间增删数据的速度很慢。table使用一个vector存储分配的指针，因此会快很多。当然，现在已经没什么用了。
+  
+  
+  定义了一个类型容器(t_tab.h, 测试中)，支持以下操作：
+          使用type_con<类型列表>定义类型，还有null_con表示空容器
+          
+          使用get_type<type_con<...>,下标>获取某一类型
+          
+          可以使用push_back<type_con<...>,type>;push_front;pop_back;pop_back编译期增删类型
+          
+          可以使用insert<type_con<...>,下标,类型>;erase<type_con<...>,下标>在任意位置增删类型
+          
+          将会实现其面向对象的方式
+  例子：
+     
+      #include<iostream>
+      #include"t_tab.h"
+      void test()
+      {
+      	fas::type_con<int, float, double, long> tp;
+      	fas::push_back<decltype(tp),unsigned>::type pushedtp;
+      	fas::get_type<decltype(tp),3>::type longtp;
+      	std::cout<<typeid(longtp).name()<<std::endl;
+      }
+      
+
+
 
