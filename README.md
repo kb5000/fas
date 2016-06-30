@@ -82,13 +82,18 @@ A useful lib for C++
   定义了一个类型容器(t_tab.h, 测试中)，支持以下操作：
           使用type_con<类型列表>定义类型，还有null_con表示空容器
           
-          使用get_type<type_con<...>,下标>获取某一类型
+          使用get_type<type_con<...>,下标>::type或get<type_con<...>,下标>获取某一类型
           
-          可以使用push_back<type_con<...>,type>;push_front;pop_back;pop_back编译期增删类型
+          可以使用push_back<type_con<...>,type>::type;push_front;pop_back;pop_back或不需要::type的push_back_t等的版本编译期增删类型
           
-          可以使用insert<type_con<...>,下标,类型>;erase<type_con<...>,下标>在任意位置增删类型
+          可以使用insert<type_con<...>,下标,类型>::type;erase<type_con<...>,下标>::type或不需要:type的insert_t,erase_t在任意位置增删类型
           
-          将会实现其面向对象的方式
+   
+ 推荐其面向对象的方式
+    
+          使用decltype(type_con对象)获取type_con类
+          
+          使用type_con<...>的get<下标>(或get_type)，push_back<T>,push_front<T>,pop_front,pop_back,insert<下标,T>,erase<下标>进行操作，不需要::type。
   例子：
      
       #include<iostream>
@@ -98,7 +103,12 @@ A useful lib for C++
       	fas::type_con<int, float, double, long> tp;
       	fas::push_back<decltype(tp),unsigned>::type pushedtp;
       	fas::get_type<decltype(tp),3>::type longtp;
-      	std::cout<<typeid(longtp).name()<<std::endl;
+      	std::cout<<tp.size<<' '<<typeid(longtp).name()<<std::endl;
+      	//面向对象(类)的方式
+      	fas::type_con<int,float,double,long> ot;
+      	decltype(ot)::push_back<char*>::insert<1,unsigned> opushed;
+      	decltype(opushed)::pop_front::get<3> num;
+      	std::cout<<typeid(num).name();
       }
       
 
