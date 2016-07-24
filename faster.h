@@ -1,5 +1,5 @@
-#ifndef FASTERA
-#define FASTERA
+#pragma once
+
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
@@ -8,6 +8,8 @@
 #include <vector>
 #include <cstdlib>
 #include <fstream>
+#include <random>
+#include <cmath>
 
 
 //fas实用命名空间
@@ -129,7 +131,7 @@ std::ios_base::sync_with_stdio(false);
     	  std::this_thread::sleep_for(std::chrono::seconds(time));
     	  break;
     	case unit::min:
-    	  std::this_thread::sleep_for(std::chrono::minutes(time));
+    	  std::this_thread::sleep_for(std::chrono::minutes(tim));
     	  break;
     	case unit::hour:
     	  std::this_thread::sleep_for(std::chrono::hours(time));
@@ -667,7 +669,7 @@ static const bool value = std::is_same<decltype(Check<T>(0)), std::true_type>::v
 }; \
 
 //noncobyable
-struct noncopyable 
+struct noncopyable
 {
   noncopyable()=default;
 	noncopyable(const noncopyable&) =delete;
@@ -676,7 +678,7 @@ struct noncopyable
 };
 
 //print
-struct _endl//virtual endl class
+struct _endl
 {}endl;
 
 HAS_MEMBER(begin);
@@ -695,7 +697,7 @@ public:
 	{
 		ends=end;
 	}
-	//TODO:put them into a template class
+	
 	template<typename T,unsigned Len>
   void operator()(const point<T,Len> p)
   {
@@ -707,7 +709,7 @@ public:
 	  std::cout<<p[i];
   }
   template<typename T,unsigned Len,typename... Args>
-  void operator()(const point<T,Len> p,Args... args) 
+  void operator()(const point<T,Len> p,Args... args)
   {
   	unsigned i=0;
 	  for (;i<Len-1;i++)
@@ -873,6 +875,8 @@ private:
 
 
 //log
+
+#ifdef START_LOG
 class log_t:noncopyable
 {
 public:
@@ -958,6 +962,73 @@ private:
 		return temp.append("_").append(tstring(long(l))).append(".log");
 	}
 }log;
+#endif
+
+//random
+template<typename engine=std::default_random_engine>
+class autoran
+{
+public:
+	autoran()
+	{
+  auto s=std::chrono::high_resolution_clock::now();
+	  seed=std::chrono::duration_cast<std::chrono::nanoseconds>(s.time_since_epoch()).count();
+	  eg.seed(seed);
+	}
+	autoran(time_t tseed):seed(tseed)
+	{}
+	uint64_t getInt(uint64_t min=0,uint64_t max=uint64_max)
+	{
+		std::uniform_int_distribution<uint64_t> ui(min,max);
+		return ui(eg);
+	}
+	double getDouble(double min=0,double max=1)
+	{
+		std::uniform_real_distribution<double> uf(min,max);
+		return uf(eg);
+	}
+	void setSeed(time_t tseed)
+	{
+		seed=tseed;
+	}
+	time_t getSeed() const
+	{
+		return seed;
+	}
+	template<typename distribution>
+	auto getCustom(distribution d)
+	{
+		return d(eg);
+	}
+private:
+	engine eg;
+	time_t seed;
+	static const uint64_t uint64_max=-1;
+};
+using fasran=autoran<>;
+
+//fequal
+bool fequal(double dl,double dr,int precision=2)
+{
+	static_assert(sizeof(double)==8,"This function needs sizeof(double)==8");
+	uint64_t idl=*reinterpret_cast<uint64_t*>(&dl);
+	uint64_t idr=*reinterpret_cast<uint64_t*>(&dr);
+	uint64_t idx=idl-idr;
+	if (idx>>63)
+	  idx-=uint64_t(1)<<63; //abs
+	return idx<precision?true:false;
+}
+
+bool fequal(float dl,float dr,int precision=2)
+{
+	static_assert(sizeof(float)==4,"This function needs sizeof(float)==4");
+	uint32_t idl=*reinterpret_cast<uint32_t*>(&dl);
+	uint32_t idr=*reinterpret_cast<uint32_t*>(&dr);
+	uint32_t idx=idl-idr;
+	if (idx>>31)
+	  idx-=uint32_t(1)<<31; //abs
+	return idx<precision?true:false;
+}
+
 
 }
-#endif
