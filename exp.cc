@@ -50,7 +50,7 @@ int main()
 #define initT fas::timer times
 #define beginT times.start()
 #define endT times.stop()
-#define outT(units) times.gettimes(fas::timer::unit::##units)
+#define outT(units) times.gettimes(fas::timer::unit::units)
 //units:nano,micro,milli,sec,min,hour
 void testt()
 {
