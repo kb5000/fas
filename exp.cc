@@ -1,7 +1,7 @@
 #include<iostream>
-#include"faster.h"
-#include"textpron.h"
-#include"table.h"
+#include"faster.hpp"
+#include"textpron.hpp"
+#include"table.hpp"
 #include<vector>
 using namespace std;
 void testt();
@@ -12,8 +12,8 @@ void testt();
 
 
 
-
-inline void print(auto vec)
+template<typename T>
+inline void print(T vec)
 {
 	for (auto& i:vec)
 	  cout<<i<<endl;
