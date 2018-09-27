@@ -3,7 +3,7 @@
 #ifndef TEXT_PRO_1
 #define TEXT_PRO_1
 #include <string>
-#include "faster.h"
+#include "faster.hpp"
 //using std::string;
 
 #define fblack textpro::fcolors::black
